@@ -1,0 +1,49 @@
+name: Something is out of date
+description: An API, command or claim in the documentation no longer holds
+title: "[stale] "
+labels: ["stale-content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The content here is a point-in-time measurement, so this is the most likely kind of report.
+        Everything below is asked because a fix has to be verifiable by someone else.
+  - type: input
+    id: location
+    attributes:
+      label: Where
+      description: File and section, for example `docs/oss-discovery-tools.md`, section 3.3
+      placeholder: docs/oss-discovery-tools.md, section 3.3
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: What it currently says
+      description: Quote the sentence, table row or command that is now wrong
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: The command you ran
+      description: The exact command, so anyone can reproduce your result
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: What you got back
+      description: Paste the output, or the part of it that matters
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: measured
+    attributes:
+      label: Date you measured
+      description: YYYY-MM-DD
+      placeholder: "2026-09-19"
+    validations:
+      required: true

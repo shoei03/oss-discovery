@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the documentation first
+    url: https://github.com/shoei03/oss-discovery/blob/main/docs/oss-discovery-tools.md
+    about: The workflow, the tool comparison, and every option that was considered and rejected
+  - name: Report a security problem
+    url: https://github.com/shoei03/oss-discovery/security/advisories/new
+    about: A command that would harm whoever runs it, or a link pointing somewhere it should not

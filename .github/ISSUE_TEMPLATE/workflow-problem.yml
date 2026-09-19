@@ -1,0 +1,43 @@
+name: The workflow or skill misbehaved
+description: A stage produced the wrong result, or the skill did not trigger
+title: "[workflow] "
+labels: ["workflow"]
+body:
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Which stage
+      options:
+        - 1. Find
+        - 2. Narrow
+        - 3. Evaluate
+        - 4. Read
+        - The skill did not trigger at all
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: asked
+    attributes:
+      label: What you asked for
+      description: The request you made, quoted
+    validations:
+      required: true
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      description: From `claude plugin list`. Say "skill copied by hand" if you installed it that way
+      placeholder: "0.1.0"
