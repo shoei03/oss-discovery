@@ -23,16 +23,25 @@ README.md                 Entry point: quick reference, install, usage
 docs/
   oss-discovery-tools.md  The main document: 1. find, 2. narrow, 3. evaluate, 4. read
   github-trend-data.md    Trend-tracking data sources (separated because the purpose differs)
+scripts/
+  check-sources.sh        Re-runs every endpoint the tables claim works; exits non-zero on drift
 plugins/oss-discovery/
   .claude-plugin/plugin.json
-  skills/oss-discovery/SKILL.md   The executable form of the workflow
+  skills/oss-discovery/SKILL.md              The executable form of the workflow
+  skills/oss-discovery/references/registries.md
+                          Domain registries. Read on demand, not loaded with the skill
 .claude-plugin/marketplace.json   Marketplace definition that publishes this repository
 ```
 
 ## When updating
 
+- **Run `scripts/check-sources.sh` before touching any table of endpoints**, and write the tables from
+  its output. PulseMCP returned 410 for months while the table still listed it as keyless, because there
+  was no way to re-run the measurement. Adding an endpoint to a table means adding it to the script
 - After changing `docs/oss-discovery-tools.md`, check whether `SKILL.md` needs to follow
   (SKILL.md is a condensation of the main document)
+- Prefer a query over a list. Anything enumerable at runtime (package registries, well-known
+  organizations) belongs in a command, not in a table that will go stale
 - Links from `SKILL.md` to the documents must use public URLs. When installed as a plugin the skill is
   copied into a cache directory and `docs/` is no longer adjacent to it
 - The documents are written in English

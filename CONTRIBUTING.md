@@ -60,10 +60,17 @@ point in time the statement belongs to.
 ```
 docs/oss-discovery-tools.md   The main document: find -> narrow -> evaluate -> read
 docs/github-trend-data.md     Trend-tracking data sources (a separate purpose from the main document)
+scripts/check-sources.sh      Re-runs every endpoint the tables claim works, and reports what drifted
 plugins/oss-discovery/skills/oss-discovery/SKILL.md
                               The executable form of the workflow. It is a condensation of the
                               main document, so update it when the main document changes
+plugins/oss-discovery/skills/oss-discovery/references/registries.md
+                              Domain registries, read on demand rather than loaded with the skill
 ```
 
 `SKILL.md` is loaded into Claude Code, so keep it terse. Evidence and measurements belong in `docs/`;
-`SKILL.md` should only point at them.
+`SKILL.md` should only point at them. Anything that is a per-domain lookup rather than part of the
+workflow goes in `references/`, so it costs nothing until it is needed.
+
+**Before changing any table of endpoints, run `scripts/check-sources.sh`** and write down what it
+actually returned. If you add an endpoint to a table, add it to the script in the same change.

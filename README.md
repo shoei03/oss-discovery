@@ -15,10 +15,12 @@ through public APIs, whether a project is actually used and actually maintained.
 | The thing you seek belongs to a specific domain (MCP, plugins, ...) | Run the workflow twice - the first pass outputs a domain registry | 1-4, twice |
 | Turn a vague request into candidates | Have the agent translate it into topics / languages | 1. Find |
 | You don't know any names at all | Exa (neural search) to surface names | 1. Find |
-| List the leading repositories in a field | `gh search repos` | 2. Narrow |
+| List the leading repositories in a field | `gh search repos`, the union of a topic, a phrase and a `topics:0` query | 2. Narrow |
+| Reach the organizations topic search drops | Owner frequency, then `--owner=` (snowball) | 2. Narrow |
 | Keep only repositories that are still alive | GraphQL (recent commit counts in one request) | 2. Narrow |
+| Score one candidate in a single call | summary.ecosyste.ms `projects/lookup` (bus factor, packages, files) | 3. Evaluate |
 | Decide whether to adopt | ecosyste.ms packages API (dependent-count percentile) | 3. Evaluate |
-| Check security health | OpenSSF Scorecard API | 3. Evaluate |
+| Check security health | deps.dev (Scorecard embedded), OSV.dev for the pinned version | 3. Evaluate |
 | Understand a repository's design and implementation | DeepWiki MCP | 4. Read |
 
 ---
