@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Bump a plugin's patch version whenever its contents change.
+#
+# Installed plugins only pick up changes when the version string moves, so a commit that edits
+# SKILL.md but leaves plugin.json alone ships nothing to anyone who already installed it.
+# This hook keeps the two in step: touch a plugin, get a version bump in the same commit.
+#
+# Enable with:  git config core.hooksPath .githooks
+# Skip once with:  git commit --no-verify
+
+set -euo pipefail
+
+# Leave merges, rebases and cherry-picks alone - the version came from the commit being replayed.
+git_dir=$(git rev-parse --git-dir)
+for marker in MERGE_HEAD CHERRY_PICK_HEAD REVERT_HEAD rebase-merge rebase-apply; do
+  [ -e "$git_dir/$marker" ] && exit 0
+done
+
+command -v jq >/dev/null 2>&1 || { echo "pre-commit: jq not found, skipping version bump" >&2; exit 0; }
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+[ -n "$staged" ] || exit 0
+
+# Every plugin with at least one staged file under it.
+plugins=$(printf '%s\n' "$staged" | awk -F/ '$1=="plugins" && NF>2 {print $2}' | sort -u)
+[ -n "$plugins" ] || exit 0
+
+for plugin in $plugins; do
+  manifest="plugins/$plugin/.claude-plugin/plugin.json"
+  [ -f "$manifest" ] || continue
+
+  # Already bumped by hand in this commit? Leave it.
+  if git diff --cached -- "$manifest" | grep -q '^+.*"version"'; then
+    continue
+  fi
+
+  current=$(jq -r '.version // empty' "$manifest")
+  if [ -z "$current" ]; then
+    echo "pre-commit: $manifest has no version field, skipping" >&2
+    continue
+  fi
+
+  if ! printf '%s' "$current" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+    echo "pre-commit: $manifest version '$current' is not x.y.z, bump it yourself" >&2
+    exit 1
+  fi
+
+  next=$(printf '%s' "$current" | awk -F. '{printf "%s.%s.%d", $1, $2, $3+1}')
+
+  # Rewrite the one line rather than piping through jq, which would reformat the whole manifest.
+  perl -i -pe "s/(\"version\"\s*:\s*\")\Q$current\E(\")/\${1}$next\${2}/ if !\$done && /\"version\"/ && (\$done=1)" "$manifest"
+
+  if [ "$(jq -r '.version' "$manifest")" != "$next" ]; then
+    echo "pre-commit: failed to rewrite the version in $manifest" >&2
+    exit 1
+  fi
+  git add "$manifest"
+  echo "  $plugin: $current -> $next (auto)"
+done

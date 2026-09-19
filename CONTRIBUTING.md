@@ -74,3 +74,16 @@ workflow goes in `references/`, so it costs nothing until it is needed.
 
 **Before changing any table of endpoints, run `scripts/check-sources.sh`** and write down what it
 actually returned. If you add an endpoint to a table, add it to the script in the same change.
+
+## Hooks
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Enable this once after cloning. `.githooks/pre-commit` bumps a plugin's patch version whenever a commit
+touches anything under its directory, because **an installed plugin only picks up changes when the version
+string moves** - edit `SKILL.md` without touching `plugin.json` and nobody who installed it sees the edit.
+
+It leaves the version alone if you already changed it in the same commit, ignores commits that stay out of
+`plugins/`, and skips merges and rebases. `git commit --no-verify` bypasses it.
