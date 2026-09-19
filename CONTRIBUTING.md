@@ -3,6 +3,10 @@
 The value of this project rests on one thing: **everything in it has been measured.**
 Hold to that and the rest of the format is negotiable.
 
+Taking part here means following the [Code of Conduct](./CODE_OF_CONDUCT.md).
+If you have found something you believe is sensitive, read [SECURITY.md](./SECURITY.md) before opening
+an issue.
+
 ## Principles
 
 ### 1. Run it before you write it

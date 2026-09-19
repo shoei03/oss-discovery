@@ -90,7 +90,10 @@ type. Reading its OpenAPI spec showed no such parameter exists - you have to fil
 was not deleted; it is kept in the document as a worked example of what happens when you infer a capability
 instead of reading the spec.
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to contribute.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to contribute, and
+[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for what is expected of everyone taking part.
+To report something you believe is sensitive, follow [SECURITY.md](./SECURITY.md) rather than opening
+an issue.
 
 ---
 
