@@ -1,0 +1,11 @@
+{
+  "name": "oss-discovery",
+  "version": "0.1.0",
+  "description": "A four-stage workflow for finding OSS and deciding whether to adopt it: check for a domain registry, narrow with gh search, evaluate real usage and health, then read the internals.",
+  "author": {
+    "name": "shoei03"
+  },
+  "homepage": "https://github.com/shoei03/oss-discovery",
+  "license": "MIT",
+  "keywords": ["oss", "discovery", "github", "search", "dependency", "evaluation"]
+}

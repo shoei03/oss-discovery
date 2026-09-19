@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "oss-discovery",
+  "description": "A workflow for finding the right OSS on GitHub and deciding whether to adopt it, with the measurements that back it up",
+  "owner": {
+    "name": "shoei03"
+  },
+  "plugins": [
+    {
+      "name": "oss-discovery",
+      "source": "./plugins/oss-discovery",
+      "description": "A four-stage workflow for finding OSS and deciding whether to adopt it: check for a domain registry, narrow with gh search, evaluate real usage and health, then read the internals."
+    }
+  ]
+}
