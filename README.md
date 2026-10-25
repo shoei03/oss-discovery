@@ -25,6 +25,18 @@ through public APIs, whether a project is actually used and actually maintained.
 
 ---
 
+## Requirements
+
+Verified 2026-10-25.
+
+- **Required:** `gh` (authenticated with `gh auth login`; without it the GraphQL calls fail), `curl` and `jq`
+- **Network:** the skill calls public APIs that need no key (ecosyste.ms, OSV, Scorecard, deps.dev and others).
+  The full list is in [scripts/check-sources.sh](./scripts/check-sources.sh)
+- **Optional:** DeepWiki MCP, only for stage 4 (Read). No authentication needed:
+  `claude mcp add -s user -t http deepwiki https://mcp.deepwiki.com/mcp`
+
+---
+
 ## Install
 
 ### As a Claude Code plugin
@@ -64,8 +76,6 @@ The skill runs these in order:
    last three months and drop the dead ones
 3. **Evaluate** - real dependent-repository counts from ecosyste.ms, individual security checks from Scorecard
 4. **Read** - ask DeepWiki MCP about the internals of the surviving candidates
-
-It assumes an authenticated `gh` CLI (`gh auth login`). It also uses `jq` and `curl`.
 
 ---
 
